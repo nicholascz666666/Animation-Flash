@@ -1,0 +1,105 @@
+For my assignment5:
+  In the model package, I created two interfaces, the first one is AnimationModel, this interface
+shows all the methods that I need in my AnimationModelImp class, and tells the client what functions
+do my AnimationModelImp has.
+  The second interface is IMotion, it shows all the methods that I need
+in my Motion class, the Motion class is an abstract class and it contains all the same features and
+methods which those three specific motion class(changeColor,changePos,changeSize) all have. For
+those three different versions of IMotion class, each of them represents a specific function, the
+changeColor class changes the color of the shape, the changePos class changes the position of the
+given shape, last, the changeSize class changes the size of the given shape.
+  In the shape package, I created a interface class which shows all the method I need for my shapes,
+and I also have an abstract class which factors out all the same features of different shapes such
+as the height, the width of different shapes. For the specific shape class, each shape class
+represents a specific shape. Also, I created a class which includes all the methods I need for
+the positions of shapes.
+
+
+For Assignmeng 6:
+
+I redesign the Model and the whole structure:
+1. Shape would no longer needed, since I add a Linked HashMap in the model connecting the name of
+the shape and a list of keyframe representing all the possible movement. I add another Map to
+connect the Name of shape and types of shape.
+2. I add a new data class KeyFrame to represents the all possible change could be happened on a
+shape. In that way, Class Motion would no longer needed since motion class was doing the job
+dividing into the change of all dimension.
+3. I add an interface of IView in view seciton for implement three types of view. I add a couple of
+method which mainly servied for Visual View.
+4. For TextView, only one method start() would be useful, since the text view could be achieved by
+implementing the textInfo() method originally written on the model class.
+5. For SVGView, it was similar to the TextView but I have to write the string within the view
+section and then pass to the console or the output file directly. The string was builded by
+StringBuilder. I creating buntch of small helper function to make the big task smaller and more
+clear.
+6. For Visual view, I created a AnimePanel which extend the JPanel for prainting and updating the
+list of keyframe. In my design, what keeps changing is the list of keyframe. So everytime repaint(),
+keyframe would be updated according to the tick and formula to update a new list of keyframe.
+7. For the Assignment5, I have to appologize that I could not update the past hw like testing, since
+my partner dropped and I redesign almost every single class of my past design.
+
+
+
+
+
+For Assign07:
+I basically redesign the whole programme.
+
+For Model:
+1. I used to use updatetick funciton in VisualPanel. Now updateTick(int tick) was added. Taking the
+current tick passing from controller, it would change a arraylist of shapes, update the shapes.
+Visual View would take the shapes and use Visual Panel to draw the paint.
+2. textInfo() and testSVG(int speed) were added to do the job split the work from the View to Model
+since in my opinion, these string could be easier generated inside the model. These two methods
+would generate the String based on the requirement (For SVG, speed needed to be passed from the
+Controller) and passing to the View.
+3. Based on the Assign06, I changed all Hashmap to Map.
+4. KeyFrame was adjust. Instead of using 15 arguments in HW6, only x,y,w,h,r,g,b was implement
+inside the keyframe for representing the one single keyframe.
+5. addKeyFrame and addMotion in AnimationBuilder were adjusted.
+addMotion would use addKeyFrame. Motion would be splited into two keyframe with different time.
+KeyFrame would be added and be sorted by its tick.
+6. InitializeShapes(ArrayList<Shape>) was added.
+To initialize shape, giving the inital key frame, easy for drawing.
+
+For View:
+1. Model would no longer be component of View. The reading like list of shapes would be passed by
+Controller
+2. Appendable output would be pasing by controller to View for output.
+3. Loop was created implements ActionListener providing one single loop. It takes IView and IModel,
+the actionPerformed(ActionEvent e) would be used to update the state in the single loop.
+4. Timer and tick were delete from Visual Panel. Controller use timer and tick to control the View
+and Model. Visual Panel only takes an arraylist of shapes and paintcomponents on the JPanel.
+5. EditView was created.
+It extends JFrame and implements IEditView. IEditView extends IView.
+Visual Panel was one component of EditView. Two Panel with JList. One is to store list of shapes and
+another list was to store list of keyframes.
+6. addFeature(Features feature) is created. It would call EditControl (implements Feature) callign
+itself for looping.
+Each button and list addActionListener to ensure data transferring when user interact the interface.
+7. For use of interface,
+All button or field had JLaber besides them for tutoring. When user lick the existing shape on
+shapelist, this shape's related list of keyframes would be showing in the frame list. Then if the
+keyframe was ticked, the text fields on the bottom would showing the readings of all values of a
+keyframe. User could edit or delete the frame.
+8. Other View implementaiton was not changed.
+
+For Controller:
+1. AnimationController implements IController. Its job is passing the reading from mdoel to view.
+Controlling the timer and the tick, which could passing the model the time and speed for generating
+update list of shapes or output of text.
+2. EditController implements Features and AcitonListener. It also tooks one model. And set the value
+of view by using method setEditView.
+EditView button's actionlistner would call controller repeatedly
+creating a loop to achieve loop.
+3. Reading of update or deleted list of shape would be aksed by view, and controller
+reproduce a new model based on the requirement.
+
+
+For test:
+1. Test of Animaiton model were missed in HW6, I create one.
+2. Also writing test with visable result for TextView and SVGView
+
+Contents in Resources were reproduced to be more accurate.
+
+
